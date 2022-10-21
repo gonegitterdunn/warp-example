@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "59581ca8-116a-416c-b0cb-6695b25b48f2",
+		"name": "warp-tokio-rest-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11586970"
+	},
+	"item": [
+		{
+			"name": "Create entry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Some Todo\",\n    \"checked\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/todo/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"todo",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

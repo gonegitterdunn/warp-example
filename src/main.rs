@@ -9,9 +9,9 @@ mod db;
 mod error;
 mod handler;
 
+type Result<T> = std::result::Result<T, Rejection>;
 type DBCon = Connection<PgConnectionManager<NoTls>>;
 type DBPool = Pool<PgConnectionManager<NoTls>>;
-type Result<T> = std::result::Result<T, Rejection>;
 
 #[tokio::main]
 async fn main() {
@@ -25,7 +25,15 @@ async fn main() {
         .and(with_db(db_pool.clone()))
         .and_then(handler::health_handler);
 
+    let todo = warp::path("todo");
+    let todo_routes = todo
+        .and(warp::post())
+        .and(warp::body::json())
+        .and(with_db(db_pool.clone()))
+        .and_then(handler::create_todo_handler);
+
     let routes = health_route
+        .or(todo_routes)
         .with(warp::cors().allow_any_origin())
         .recover(error::handle_rejection);
 

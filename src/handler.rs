@@ -1,6 +1,11 @@
-use warp::{http::StatusCode, reject, Reply};
+use warp::{http::StatusCode, reject, reply::json, Reply};
 
-use crate::{db, error::Error::DBQueryError, DBPool, Result};
+use crate::{
+    data::{TodoRequest, TodoResponse},
+    db,
+    error::Error::DBQueryError,
+    DBPool, Result,
+};
 
 pub async fn health_handler(db_pool: DBPool) -> Result<impl Reply> {
     let db = db::get_db_con(&db_pool)
