@@ -13,3 +13,11 @@ pub async fn health_handler(db_pool: DBPool) -> Result<impl Reply> {
 
     Ok(StatusCode::OK)
 }
+
+pub async fn create_todo_handler(body: TodoRequest, db_pool: DBPool) -> Result<impl Reply> {
+    Ok(json(&TodoResponse::of(
+        db::create_todo(&db_pool, body)
+            .await
+            .map_err(|e| reject::custom(e))?,
+    )))
+}
